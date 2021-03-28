@@ -28,14 +28,12 @@ public class MemberDao {
 	// 회원 추가
 	public boolean addMember(MemberDto dto) {
 		
-		dto.setCount(0);
-		dto.setLevel(0);
 		
 		String sql = " INSERT INTO MEMBER(MEMBERID, PWD, EMAIL, NAME, PHONENUM, GENDER, "
 				+ " TRAINERID, PROFILEIMG, AGE, HEIGHT, GWEIGHT, MEMLEVEL, "
 				+ " MEMTYPE, GYMNAME, TRAINERCONTENT, WEIGHT ) "
 				+ " VALUES(?, ?, ?, ?, ?, ? "
-				+ "			?, ?, ?, ?, ?, ?, "
+				+ "			?, ?, ?, ?, ?, 0, "
 				+ "			?, ?, ?, ?) ";
 		
 		Connection conn = null;
@@ -58,17 +56,16 @@ public class MemberDao {
 			
 			
 			
-			psmt.setString(4, dto.getTrainerID());
-			psmt.setString(4, dto.getProfileImg());
-			psmt.setInt(4, dto.getAge());
-			psmt.setDouble(4, dto.getHeight());
-			psmt.setDouble(4, dto.getGweight());
-			psmt.setInt(4, dto.getLevel());
+			psmt.setString(7, dto.getTrainerID());
+			psmt.setString(8, dto.getProfileImg());
+			psmt.setInt(9, dto.getAge());
+			psmt.setDouble(10, dto.getHeight());
+			psmt.setDouble(11, dto.getGweight());
 			
-			psmt.setDouble(4, dto.getWeight());
-			psmt.setString(4, dto.getGymname());
-			psmt.setString(4, dto.getTrainerContent());
-			psmt.setInt(4, dto.getMemtype());
+			psmt.setDouble(12, dto.getWeight());
+			psmt.setString(13, dto.getGymname());
+			psmt.setString(14, dto.getTrainerContent());
+			psmt.setInt(15, dto.getMemType());
 			
 			
 			count = psmt.executeUpdate();
@@ -135,7 +132,7 @@ public class MemberDao {
 		
 		String sql = " SELECT MEMBERID "
 				+ " FROM MEMBER "
-				+ " WHERE ID=? ";
+				+ " WHERE MEMBERID=? ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;

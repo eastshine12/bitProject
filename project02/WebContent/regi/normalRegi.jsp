@@ -28,8 +28,8 @@
 			                    <div class="cols-sm-10">
 			                        <div class="input-group">
 			                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-			                            <input type="text" class="form-control" name="name" id="name" placeholder="아이디를 입력하세요." />
-			                            <input type="button" class="btn btn-secondary" name="name" id="name" value="중복확인"/>
+			                            <input type="text" class="form-control" name="id" id="id" placeholder="아이디를 입력하세요." />
+			                            <input type="button" class="btn btn-secondary" name="chkIdBtn" id="chkIdBtn" value="중복확인"/>
 			                        </div>
 			                    </div>
 			                </div>
@@ -38,7 +38,7 @@
 			                    <div class="cols-sm-10">
 			                        <div class="input-group">
 			                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-			                            <input type="password" class="form-control" name="email" id="email" placeholder="비밀번호를 입력하세요." />
+			                            <input type="password" class="form-control" name="pwd" id="pwd" placeholder="비밀번호를 입력하세요." />
 			                        </div>
 			                    </div>
 			                </div>
@@ -47,7 +47,7 @@
 			                    <div class="cols-sm-10">
 			                        <div class="input-group">
 			                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-			                            <input type="password" class="form-control" name="email" id="email" placeholder="비밀번호를 다시 한번 입력하세요." />
+			                            <input type="password" class="form-control" name="pwd2" id="pwd2" placeholder="비밀번호를 다시 한번 입력하세요." />
 			                        </div>
 			                    </div>
 			                </div>
@@ -56,7 +56,7 @@
 			                    <div class="cols-sm-10">
 			                        <div class="input-group">
 			                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-			                            <input type="text" class="form-control" name="username" id="username" placeholder="이름을 입력하세요." />
+			                            <input type="text" class="form-control" name="name" id="name" placeholder="이름을 입력하세요." />
 			                        </div>
 			                    </div>
 			                </div>
@@ -65,19 +65,19 @@
 			                    <div class="cols-sm-1">
 			                        <div class="input-group">
 			                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-			                            <input type="text" class="form-control" name="password" id="password" placeholder="010" />
+			                            <input type="text" class="form-control" name="phoneNum1" id="phoneNum1" placeholder="010" />
 			                        </div>
 			                    </div>
 			                    <div class="cols-sm-3">
 			                        <div class="input-group">
 			                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-			                            <input type="text" class="form-control" name="password" id="password" placeholder="전화번호를 입력하세요." />
+			                            <input type="text" class="form-control" name="phoneNum2" id="phoneNum2" placeholder="전화번호를 입력하세요." />
 			                        </div>
 			                    </div>
 			                    <div class="cols-sm-3">
 			                        <div class="input-group">
 			                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-			                            <input type="text" class="form-control" name="password" id="password" placeholder="전화번호를 입력하세요." />
+			                            <input type="text" class="form-control" name="phoneNum3" id="phoneNum3" placeholder="전화번호를 입력하세요." />
 			                        </div>
 			                    </div>
 			                </div>
@@ -124,7 +124,7 @@
 			                </div>
 			                
 				            <div class="form-group">
-				            	<button type="button" class="btn btn-primary btn-lg btn-block login-button">회원 가입</button>
+				            	<button type="button" id="regiBtn" class="btn btn-primary btn-lg btn-block login-button">회원 가입</button>
 				            </div>
 			                <div class="login-register">
 			                    <a href="#">Login</a>
@@ -137,6 +137,37 @@
 	</div>
 </div>
 
+
+<script type="text/javascript">
+
+$(function () {
+	$("#chkIdBtn").click(function () {
+		$.ajax({
+			type: "post",
+			url: "member?param=idcheck",
+			data: { "id":$("#id").val() },
+			success:function( data ){
+				alert('chkIdBtn success');
+			//	alert(data.msg);
+				if(data.msg == "YES"){
+					$("#idcheck").css("color", "#0000ff");
+					$("#idcheck").html('사용할 수 있는 id입니다');
+				}else{
+					$("#idcheck").css("color", "#ff0000");
+					$("#idcheck").html('사용할 수 없는 id입니다');
+					$("#_id").val("");
+				}
+			},
+			error:function(){
+				alert('error');
+			}			
+		});
+		
+	});	
+});
+
+
+</script>
 
 
 </body>
