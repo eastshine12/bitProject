@@ -142,6 +142,52 @@
 								</div>
 							</div>
 							
+							<div style="border: 1px solid #bdbdbd; padding: 5px;">
+								<div class="form-group">
+									<div class="row">
+										<div class="col-md-16 panel panel-heading">&nbsp;&nbsp;다양한 서비스를 위해 아래 몇 가지 정보를 추가로 입력하세요. (선택)</div>
+										<div class="col-md-4 panel panel-heading" style="display:none; color:red" id="address_error"></div>
+									</div>
+								</div>
+								
+				                <div class="form-group">
+				                    <label for="age" class="cols-sm-2 control-label">나이</label>
+				                    <div class="cols-sm-10">
+				                        <div class="input-group">
+				                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+				                            <input type="number" class="form-control" name="age" id="age" placeholder="나이를 입력하세요." />
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class="form-group">
+				                    <label for="height" class="cols-sm-2 control-label">키</label>
+				                    <div class="cols-sm-10">
+				                        <div class="input-group">
+				                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+				                            <input type="number" class="form-control" name="height" id="height" placeholder="(cm)" />
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class="form-group">
+				                    <label for="weight" class="cols-sm-2 control-label">현재 몸무게</label>
+				                    <div class="cols-sm-10">
+				                        <div class="input-group">
+				                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+				                            <input type="number" class="form-control" name="weight" id="weight" placeholder="(kg)" />
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class="form-group">
+				                    <label for="weight" class="cols-sm-2 control-label">목표 몸무게</label>
+				                    <div class="cols-sm-10">
+				                        <div class="input-group">
+				                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+				                            <input type="number" class="form-control" name="gWeight" id="gWeight" placeholder="(kg)" />
+				                        </div>
+				                    </div>
+				                </div>
+				            </div> 
+							
 							
 				            <div class="form-group">
 				            	<button type="button" id="regiBtn" class="btn btn-primary btn-lg btn-block login-button">회원 가입</button>
@@ -280,11 +326,7 @@ $(function () {
 		}
 		
 		
-		/* 파일 업로드 되게  */
-		let formData = new FormData($('#fileForm')[0]);
-		//formData.append("fileObj", $('#profileImg')[0].files[0]);
-	
-		
+
 		/* 선택사항 입력 안하면 0으로 처리 */ 
 		if($("#age").val() == null || $("#age").val() == ""){
 			$("#age").val(0);
@@ -298,7 +340,12 @@ $(function () {
 		if($("#gWeight").val() == null || $("#gWeight").val() == ""){
 			$("#gWeight").val(0);
 		}
-			
+		
+		/* 파일 업로드 되게  */
+		let formData = new FormData($('#fileForm')[0]);
+		//formData.append("fileObj", $('#profileImg')[0].files[0]);
+	
+		
 		
 		$.ajax({
 			type: "post",

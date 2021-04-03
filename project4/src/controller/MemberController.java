@@ -76,14 +76,16 @@ public class MemberController extends HttpServlet {
 			
 			String email = "";
 			String gender = "";
-			int age = 0;
-			double height = 0;
-			double weight = 0;
-			double gWeight = 0;
+
 			int memType = 0;
 			String trainerID = "";
 			String gymName = "";
 			String trainerContent = "";
+			
+			String age = ""; 		// int
+			String height = "";		// double
+			String weight = "";		// double
+			String gWeight = "";	// double
 			
 			// file명 저장
 			String profileImg = "";
@@ -144,16 +146,16 @@ public class MemberController extends HttpServlet {
 								trainerContent = item.getString("utf-8");
 							}		
 							else if(item.getFieldName().equals("age")){
-								age = Integer.parseInt(item.getString("utf-8"));
+								age = item.getString("utf-8");
 							}			
 							else if(item.getFieldName().equals("height")){
-								height = Double.parseDouble(item.getString("utf-8"));
+								height = item.getString("utf-8");
 							}			
 							else if(item.getFieldName().equals("weight")){
-								weight = Double.parseDouble(item.getString("utf-8"));
+								weight = item.getString("utf-8");
 							}			
 							else if(item.getFieldName().equals("gWeight")){
-								gWeight = Double.parseDouble(item.getString("utf-8"));
+								gWeight = item.getString("utf-8");
 							}			
 						}
 						else {	// file
@@ -196,19 +198,25 @@ public class MemberController extends HttpServlet {
 			}
 			
 			
-			/* 트레이너라면 trainerID를  id와 똑같게 하고 멤버타입 1로 바꿔준다. */
+			/* 트레이너라면 멤버타입 1로 바꿔준다. */
 			if(gymName != "" && gymName != null && trainerContent != "" && trainerContent != null) {
-				trainerID = id;
 				memType = 1;
 			}
+			
+			String phoneNum = phoneNum1+phoneNum2+phoneNum3;	
+			
+			System.out.println("값 확인 id:"+id+" pwd:"+pwd+" email:"+email+" name:"+name+" phoneNum:"
+					+phoneNum+" gender:"+gender+" trainerID:"+trainerID+" profileImg:"+profileImg+ 
+					" age:"+age+" height:"+height+" gWeight:"+gWeight+" memType:"+memType+" gymName:"+gymName+  
+					" trainerContent:"+trainerContent+" weight:"+weight );
 			
 			
 			//memLevel은 0으로 세팅.
 			//선택사항 입력 안하면 0으로 처리 
-			String phoneNum = phoneNum1+phoneNum2+phoneNum3;	
 			MemberDto mem = new MemberDto(id, pwd, email, name, phoneNum, gender, 
-										trainerID, profileImg, age, height, gWeight, 0, 
-										memType, gymName, trainerContent, weight);
+										trainerID, profileImg, Integer.parseInt(age), Double.parseDouble(height), 
+										Double.parseDouble(gWeight), 0, memType, gymName, 
+										trainerContent, Double.parseDouble(weight));
 			
 			
 			boolean b = dao.addMember(mem);
@@ -313,15 +321,50 @@ public class MemberController extends HttpServlet {
 			
 			if(rightCode == true){
 				script.println("<script>");
-				script.println("alert('이메일 인증에 성공하였습니다.')");
+				script.println("alert('이메일 인증에 성공하였습니다.');");
+				script.println("window.close();");
 				script.println("</script>");
 			} else{
 				script.println("<script>");
-				script.println("alert('이메일 인증을 실패하였습니다.')");
+				script.println("alert('이메일 인증을 실패하였습니다.');");
+				script.println("window.close();");
 				script.println("</script>");
 			}
 			
 		}
+		
+		/* 로그인 버튼 눌렀을 때 */
+		else if(param.equals("logincheck")) {
+	         //System.out.println("로그인체크 컨트롤러");
+	         String id = req.getParameter("id");
+	         String pwd = req.getParameter("pwd");
+	         //System.out.println(id+","+pwd);
+	         MemberDto dto = dao.login(id, pwd);
+	         
+	         //세션 생성
+	          if(dto != null && !dto.getMemberID().equals("")){
+	                  req.getSession().setAttribute("login", dto);
+	                 
+	                  System.out.println("memType"+dto.getMemType());
+	                  if(dto.getMemType()==0) {
+	                     //일반
+	                     resp.sendRedirect("main.jsp?memType=0");
+	                  }
+	                  else if(dto.getMemType()==1) {
+	                     //트레이너
+	                     resp.sendRedirect("main.jsp?memType=1");
+	                  }
+	                  else if(dto.getMemType()==2) {
+	                     //관리자
+	                     resp.sendRedirect("main.jsp?memType=2");
+	                  }
+	               }else {
+	                  System.out.println("login 정보 확인");
+	                  resp.sendRedirect("main.jsp");
+	               }
+	         
+	      }
+		
 		
 		
 	}

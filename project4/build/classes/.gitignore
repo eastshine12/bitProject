@@ -1,4 +1,4 @@
-/mail/
-/controller/
-/dto/
 /dao/
+/db/
+/dto/
+/mail/

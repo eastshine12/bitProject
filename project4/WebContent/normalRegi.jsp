@@ -113,7 +113,7 @@
 							<div style="border: 1px solid #bdbdbd; padding: 5px;">
 								<div class="form-group">
 									<div class="row">
-										<div class="col-md-16 panel panel-heading">&nbsp;&nbsp;다양한 서비스를 위해 아래 몇 가지 정보를 추가로 입력하세요. (선택)</div>
+										<div class="col-md-16 panel panel-heading" style="margin: 5px; padding: 8px;">&nbsp;&nbsp;다양한 서비스를 위해 아래 몇 가지 정보를 추가로 입력하세요. (선택)</div>
 										<div class="col-md-4 panel panel-heading" style="display:none; color:red" id="address_error"></div>
 									</div>
 								</div>
@@ -297,12 +297,7 @@ $(function () {
 			alert('필수 입력 항목이 비어있습니다.');
 			return;
 		}
-		
-		
-		/* 파일 업로드 되게  */
-		let formData = new FormData($('#fileForm')[0]);
-		//formData.append("fileObj", $('#profileImg')[0].files[0]);
-	
+
 		
 		/* 선택사항 입력 안하면 0으로 처리 */ 
 		if($("#age").val() == null || $("#age").val() == ""){
@@ -317,7 +312,12 @@ $(function () {
 		if($("#gWeight").val() == null || $("#gWeight").val() == ""){
 			$("#gWeight").val(0);
 		}
-			
+		
+		
+		/* 파일 업로드 되게  */
+		let formData = new FormData($('#fileForm')[0]);
+		//formData.append("fileObj", $('#profileImg')[0].files[0]);
+		
 		
 		$.ajax({
 			type: "post",
@@ -343,8 +343,6 @@ $(function () {
 		
 	});	
 });
-
-
 
 
 </script>
